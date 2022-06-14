@@ -54,18 +54,21 @@ public class PostManager implements PostService {
     }
 
     @Override
-    public List<Post> getPostsByTitle(String word) {
-        return this.postDao.getPostsByTitle(word);
+    public List<Post> getPostsByTitle(String word, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.postDao.getPostsByTitle(word, pageable);
     }
 
     @Override
-    public List<Post> getPostsByDescription(String word) {
-        return this.postDao.getPostsByDescription(word);
+    public List<Post> getPostsByDescription(String word,  int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.postDao.getPostsByDescription(word, pageable);
     }
 
     @Override
-    public List<Post> getPostsByContent(String word) {
-        return this.postDao.getPostsByContent(word);
+    public List<Post> getPostsByContent(String word,  int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.postDao.getPostsByContent(word,pageable);
     }
 
     @Override
@@ -84,12 +87,19 @@ public class PostManager implements PostService {
     @Transactional
     public void add(int userId, Post post) {
         User author = this.userService.getUserById(userId);
-        this.visitorService.delete(userId);
 
         if (authorService.getAuthorById(userId) == null){
+            this.visitorService.delete(userId);
             author = this.authorService.add((Author) author);
         }
         post.setAuthor((Author) author);
+        this.postDao.save(post);
+    }
+
+    @Override
+    public void updateLikeCount(int postId, int count) {
+        Post post = this.postDao.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
+        post.setLikeCount(post.getLikeCount() + count);
         this.postDao.save(post);
     }
 

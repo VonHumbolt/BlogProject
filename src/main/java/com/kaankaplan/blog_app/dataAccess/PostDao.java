@@ -21,11 +21,11 @@ public interface PostDao extends JpaRepository<Post, Integer> {
     List<Post> getPostsByAuthorId(int authorId, Pageable pageable);
 
     @Query("From Post p where p.title like '%:word%'")
-    List<Post> getPostsByTitle(String word);
+    List<Post> getPostsByTitle(String word,  Pageable pageable);
 
     @Query("From Post p where p.description like '%:word%'")
-    List<Post> getPostsByDescription(String word);
+    List<Post> getPostsByDescription(String word, Pageable pageable);
 
     @Query("From Post p where p.content like '%:word%'")
-    List<Post> getPostsByContent(String word);
+    List<Post> getPostsByContent(String word,  Pageable pageable);
 }

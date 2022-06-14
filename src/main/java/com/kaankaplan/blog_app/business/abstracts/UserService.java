@@ -13,4 +13,8 @@ public interface UserService {
     User findByEmail(String email);
 
     void delete(int userId);
+
+    void likePost(int postId, int userId);
+
+    void removelikePost(int postId, int userId);
 }

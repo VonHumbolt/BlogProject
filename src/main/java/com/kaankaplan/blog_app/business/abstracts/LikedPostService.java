@@ -12,6 +12,8 @@ public interface LikedPostService {
 
     LikedPost getLikedPostById(int likedPostId);
 
+    LikedPost getUserLikePost(int userId, int postId);
+
     void add(LikedPost likedPost);
 
     void delete(int likedPostId);

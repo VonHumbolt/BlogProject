@@ -39,7 +39,7 @@ public class Post {
     private Date publishedDate = new Date();
 
     @Column(name = "like_count")
-    private int likeCount;
+    private int likeCount = 0;
 
     @NotBlank
     @ManyToOne

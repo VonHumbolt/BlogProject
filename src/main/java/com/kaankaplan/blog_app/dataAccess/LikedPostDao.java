@@ -14,4 +14,6 @@ public interface LikedPostDao extends JpaRepository<LikedPost, Integer> {
     @Query("From LikedPost p where p.user.userId = :userId")
     List<LikedPost> getUsersLikedPosts(int userId, Pageable pageable);
 
+    @Query("From LikedPost p where p.user.userId = :userId and p.postId = :postId")
+    LikedPost getUserLikePost(int userId, int postId);
 }

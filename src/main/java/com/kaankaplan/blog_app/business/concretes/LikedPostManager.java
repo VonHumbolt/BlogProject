@@ -38,6 +38,11 @@ public class LikedPostManager implements LikedPostService {
     }
 
     @Override
+    public LikedPost getUserLikePost(int userId, int postId) {
+        return this.likedPostDao.getUserLikePost(userId, postId);
+    }
+
+    @Override
     public void add(LikedPost likedPost) {
         this.likedPostDao.save(likedPost);
     }
