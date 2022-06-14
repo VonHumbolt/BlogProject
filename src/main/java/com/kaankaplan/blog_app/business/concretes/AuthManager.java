@@ -2,10 +2,10 @@ package com.kaankaplan.blog_app.business.concretes;
 
 import com.google.common.collect.Lists;
 import com.kaankaplan.blog_app.business.abstracts.AuthService;
+import com.kaankaplan.blog_app.business.abstracts.AuthorService;
 import com.kaankaplan.blog_app.business.abstracts.UserService;
-import com.kaankaplan.blog_app.business.abstracts.VisitorService;
+import com.kaankaplan.blog_app.entities.Author;
 import com.kaankaplan.blog_app.entities.User;
-import com.kaankaplan.blog_app.entities.Visitor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,12 +19,12 @@ import java.util.List;
 public class AuthManager implements AuthService, UserDetailsService {
 
     private final UserService userService;
-    private final VisitorService visitorService;
+    private final AuthorService authorService;
 
     @Autowired
-    public AuthManager(UserService userService, VisitorService visitorService) {
+    public AuthManager(UserService userService, AuthorService authorService) {
         this.userService = userService;
-        this.visitorService = visitorService;
+        this.authorService = authorService;
     }
 
     @Override
@@ -32,7 +32,14 @@ public class AuthManager implements AuthService, UserDetailsService {
         User userFromDb = this.userService.findByEmail(user.getEmail());
 
         if (userFromDb == null) {
-            this.visitorService.add((Visitor) user);
+            Author author = (Author) Author.builder()
+                    .firstName(user.getFirstName())
+                    .lastName(user.getLastName())
+                    .email(user.getEmail())
+                    .password(user.getPassword())
+                    .build();
+
+            this.authorService.add(author);
         }
     }
 

@@ -36,7 +36,7 @@ public class UserManager implements UserService {
 
     @Override
     public User getUserById(int userId) {
-        return this.userDao.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        return this.userDao.findById(userId).orElseThrow(() -> new RuntimeException("User not found")); //.orElse(null);
     }
 
     @Override

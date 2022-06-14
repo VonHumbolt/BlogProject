@@ -2,8 +2,6 @@ package com.kaankaplan.blog_app.business.concretes;
 
 import com.kaankaplan.blog_app.business.abstracts.AuthorService;
 import com.kaankaplan.blog_app.business.abstracts.PostService;
-import com.kaankaplan.blog_app.business.abstracts.UserService;
-import com.kaankaplan.blog_app.business.abstracts.VisitorService;
 import com.kaankaplan.blog_app.dataAccess.PostDao;
 import com.kaankaplan.blog_app.entities.Author;
 import com.kaankaplan.blog_app.entities.Post;
@@ -13,23 +11,17 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 public class PostManager implements PostService {
 
     private final PostDao postDao;
-    private final VisitorService visitorService;
-    private final UserService userService;
     private final AuthorService authorService;
 
     @Autowired
-    public PostManager(PostDao postDao, VisitorService visitorService, UserService userService,
-                       AuthorService authorService) {
+    public PostManager(PostDao postDao, AuthorService authorService) {
         this.postDao = postDao;
-        this.visitorService = visitorService;
-        this.userService = userService;
         this.authorService = authorService;
     }
 
@@ -84,15 +76,11 @@ public class PostManager implements PostService {
     }
 
     @Override
-    @Transactional
     public void add(int userId, Post post) {
-        User author = this.userService.getUserById(userId);
 
-        if (authorService.getAuthorById(userId) == null){
-            this.visitorService.delete(userId);
-            author = this.authorService.add((Author) author);
-        }
-        post.setAuthor((Author) author);
+        Author author = this.authorService.getAuthorById(userId);
+
+        post.setAuthor(author);
         this.postDao.save(post);
     }
 

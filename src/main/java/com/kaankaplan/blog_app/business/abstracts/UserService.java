@@ -17,4 +17,5 @@ public interface UserService {
     void likePost(int postId, int userId);
 
     void removelikePost(int postId, int userId);
+
 }

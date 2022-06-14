@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @Data
@@ -41,7 +42,6 @@ public class Post {
     @Column(name = "like_count")
     private int likeCount = 0;
 
-    @NotBlank
     @ManyToOne
     @JoinColumn(name = "author")
     private Author author;
