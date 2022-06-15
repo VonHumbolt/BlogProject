@@ -12,6 +12,8 @@ public interface UserService {
 
     User findByEmail(String email);
 
+    void add(User user);
+
     void delete(int userId);
 
     void likePost(int postId, int userId);

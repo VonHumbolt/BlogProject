@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -77,6 +78,7 @@ public class PostManager implements PostService {
     }
 
     @Override
+    @Transactional
     public void add(int userId, Post post) {
 
         Author author = this.authorService.getAuthorById(userId);
@@ -86,6 +88,7 @@ public class PostManager implements PostService {
     }
 
     @Override
+    @Transactional
     public void updateLikeCount(int postId, int count) {
         Post post = this.postDao.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
         post.setLikeCount(post.getLikeCount() + count);
@@ -98,6 +101,7 @@ public class PostManager implements PostService {
     }
 
     @Override
+    @Transactional
     public void editPost(int postId, int userId, EditPostDto postDto) {
         Post postFromDb = this.postDao.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
 

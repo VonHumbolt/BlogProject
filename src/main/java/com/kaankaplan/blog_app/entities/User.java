@@ -41,6 +41,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "is_active")
+    private boolean isActive = false;
+
     @ManyToOne
     @JoinColumn(name = "claim")
     private OperationClaim claim;
@@ -48,4 +51,5 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonIgnore
     private List<LikedPost> likedPosts;
+
 }

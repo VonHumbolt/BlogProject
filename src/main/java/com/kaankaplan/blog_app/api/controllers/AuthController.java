@@ -24,7 +24,14 @@ public class AuthController {
     public ResponseEntity<String> register(@RequestBody @Valid User user){
         this.authService.register(user);
 
-        return new ResponseEntity<>("İşlem başarılı", HttpStatus.CREATED);
+        return new ResponseEntity<>("İşlem başarılı, Emailinize gelen link ile hesabınızı doğrulayın", HttpStatus.CREATED);
+    }
+
+    @GetMapping("accountVerification/{verificationToken}")
+    public ResponseEntity<String> verifyAccount(@PathVariable String verificationToken) {
+        this.authService.verifyAccount(verificationToken);
+
+        return new ResponseEntity<>("Account Successfullt Verified!", HttpStatus.OK);
     }
 
 }

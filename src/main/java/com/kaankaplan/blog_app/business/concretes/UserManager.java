@@ -45,6 +45,12 @@ public class UserManager implements UserService {
     }
 
     @Override
+    @Transactional
+    public void add(User user) {
+        this.userDao.save(user);
+    }
+
+    @Override
     public void delete(int userId) {
         this.userDao.deleteById(userId);
     }
