@@ -5,6 +5,7 @@ import com.kaankaplan.blog_app.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping("getall")
     public ResponseEntity<List<User>> getAllUsers(@RequestParam Optional<Integer> pageNo, @RequestParam Optional<Integer> pageSize) {
         List<User> users = this.userService.getAllUsers(pageNo.orElse(1), pageSize.orElse(10));
@@ -41,6 +43,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("delete/{userId}")
     public ResponseEntity<String> delete(@PathVariable int userId) {
         this.userService.delete(userId);
@@ -48,6 +51,7 @@ public class UserController {
         return new ResponseEntity<>("User is deleted", HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
     @PostMapping("like/{postId}/{userId}")
     public ResponseEntity<String> likePost(@PathVariable int postId, @PathVariable int userId) {
         this.userService.likePost(postId, userId);
@@ -55,6 +59,7 @@ public class UserController {
         return new ResponseEntity<>("Post liked", HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")
     @PostMapping("removeLike/{postId}/{userId}")
     public ResponseEntity<String> removeLikePost(@PathVariable int postId, @PathVariable int userId) {
         this.userService.removelikePost(postId, userId);

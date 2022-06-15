@@ -6,6 +6,7 @@ import com.kaankaplan.blog_app.dataAccess.PostDao;
 import com.kaankaplan.blog_app.entities.Author;
 import com.kaankaplan.blog_app.entities.Post;
 import com.kaankaplan.blog_app.entities.User;
+import com.kaankaplan.blog_app.entities.dtos.EditPostDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -94,5 +95,21 @@ public class PostManager implements PostService {
     @Override
     public void delete(int postId) {
         this.postDao.deleteById(postId);
+    }
+
+    @Override
+    public void editPost(int postId, int userId, EditPostDto postDto) {
+        Post postFromDb = this.postDao.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
+
+        if (postFromDb.getAuthor().getUserId() == userId){
+            postFromDb.setTitle(postDto.getTitle());
+            postFromDb.setDescription(postDto.getDescription());
+            postFromDb.setContent(postDto.getContent());
+            postFromDb.setLikeCount(0);
+
+            this.postDao.save(postFromDb);
+        } else {
+            throw new RuntimeException("Bu işlem için yetkiniz bulunmamaktadır");
+        }
     }
 }

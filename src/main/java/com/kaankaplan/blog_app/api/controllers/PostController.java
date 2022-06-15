@@ -2,10 +2,12 @@ package com.kaankaplan.blog_app.api.controllers;
 
 import com.kaankaplan.blog_app.business.abstracts.PostService;
 import com.kaankaplan.blog_app.entities.Post;
+import com.kaankaplan.blog_app.entities.dtos.EditPostDto;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -81,6 +83,7 @@ public class PostController {
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('AUTHOR')")
     @PostMapping("add/{userId}")
     public ResponseEntity<String> add(@PathVariable int userId, @RequestBody @Valid Post post) {
         this.postService.add(userId, post);
@@ -88,10 +91,18 @@ public class PostController {
         return new ResponseEntity<>("Post created", HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAnyRole('AUTHOR','ADMIN')")
     @PostMapping("delete/{postId}")
     public ResponseEntity<String> delete(@PathVariable int postId) {
         this.postService.delete(postId);
 
         return new ResponseEntity<>("Post deleted", HttpStatus.OK);
+    }
+    @PreAuthorize("hasRole('AUTHOR')")
+    @PostMapping("edit/{postId}/{userId}")
+    public ResponseEntity<String> editPost(@PathVariable int postId, @PathVariable int userId, @RequestBody EditPostDto postDto) {
+        this.postService.editPost(postId, userId, postDto);
+
+        return new ResponseEntity<>("Post edit successfull", HttpStatus.OK);
     }
 }

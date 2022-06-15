@@ -1,6 +1,7 @@
 package com.kaankaplan.blog_app.business.abstracts;
 
 import com.kaankaplan.blog_app.entities.Post;
+import com.kaankaplan.blog_app.entities.dtos.EditPostDto;
 
 import java.util.List;
 
@@ -27,4 +28,6 @@ public interface PostService {
     void updateLikeCount(int postId, int count);
 
     void delete(int postId);
+
+    void editPost(int postId, int userId, EditPostDto postDto);
 }

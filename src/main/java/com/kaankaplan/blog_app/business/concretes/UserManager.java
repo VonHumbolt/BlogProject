@@ -54,6 +54,10 @@ public class UserManager implements UserService {
     public void likePost(int postId, int userId) {
         User user = this.userDao.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
+        LikedPost userLikePost = this.likedPostService.getUserLikePost(userId, postId);
+        if (userLikePost != null) {
+            throw new RuntimeException("Post is already liked!");
+        }
         this.postService.updateLikeCount(postId, 1);
 
         LikedPost likedPost = LikedPost.builder().postId(postId).user(user).build();
@@ -63,6 +67,11 @@ public class UserManager implements UserService {
     @Override
     @Transactional
     public void removelikePost(int postId, int userId) {
+
+        LikedPost userLikePost = this.likedPostService.getUserLikePost(userId, postId);
+        if (userLikePost == null){
+            throw new RuntimeException("There is no like for post");
+        }
 
         this.postService.updateLikeCount(postId, -1);
 
