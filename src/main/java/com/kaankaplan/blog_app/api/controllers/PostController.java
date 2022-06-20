@@ -41,7 +41,7 @@ public class PostController {
         return new ResponseEntity<>(postList, HttpStatus.OK);
     }
 
-    @GetMapping("sortedLikeCount/{authorId}")
+    @GetMapping("getByAuthorId/{authorId}")
     public ResponseEntity<List<Post>> getPostsByAuthorId(@PathVariable int authorId, @RequestParam Optional<Integer> pageNo, @RequestParam Optional<Integer> pageSize) {
         List<Post> postList = this.postService.getPostsByAuthorId(authorId, pageNo.orElse(1), pageSize.orElse(10));
 
@@ -76,8 +76,8 @@ public class PostController {
         return new ResponseEntity<>(postList, HttpStatus.OK);
     }
 
-    @GetMapping("getById/{postId}")
-    public ResponseEntity<Post> getAllPosts(@PathVariable int postId) {
+    @GetMapping("/{postId}")
+    public ResponseEntity<Post> getByPostId(@PathVariable int postId) {
 
         Post post = this.postService.getPostById(postId);
         return new ResponseEntity<>(post, HttpStatus.OK);
