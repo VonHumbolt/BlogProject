@@ -2,6 +2,7 @@ package com.kaankaplan.blog_app.api.controllers;
 
 import com.kaankaplan.blog_app.business.abstracts.UserService;
 import com.kaankaplan.blog_app.entities.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/users/")
 @CrossOrigin
+@Slf4j
 public class UserController {
 
     private final UserService userService;
@@ -40,6 +42,7 @@ public class UserController {
     @GetMapping("getByEmail/{email}")
     public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
         User user = this.userService.findByEmail(email);
+
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
