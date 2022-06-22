@@ -51,4 +51,9 @@ public class LikedPostController {
         LikedPost likedPost = this.likedPostService.getUserLikePost(userId, postId);
         return new ResponseEntity<>(likedPost, HttpStatus.OK);
     }
+
+    @GetMapping("getNumberOfUsersLikedPosts/{userId}")
+    public int getNumberOfUsersLikedPosts(@PathVariable int userId){
+        return this.likedPostService.getNumberOfUsersLikedPosts(userId);
+    }
 }

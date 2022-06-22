@@ -30,4 +30,8 @@ public interface PostService {
     void delete(int postId);
 
     void editPost(int postId, int userId, EditPostDto postDto);
+
+    int getNumberOfPosts();
+
+    int getAuthorNumberOfPosts(int authorId);
 }

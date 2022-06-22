@@ -105,4 +105,14 @@ public class PostController {
 
         return new ResponseEntity<>("Post edit successfull", HttpStatus.OK);
     }
+
+    @GetMapping("getNumberOfPosts")
+    public int getNumberOfPosts(){
+        return this.postService.getNumberOfPosts();
+    }
+
+    @GetMapping("getAuthorPostCount/{authorId}")
+    public int getAuthorNumberOfPosts(@PathVariable int authorId) {
+        return this.postService.getAuthorNumberOfPosts(authorId);
+    }
 }

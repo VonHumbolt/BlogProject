@@ -17,7 +17,7 @@ public interface PostDao extends JpaRepository<Post, Integer> {
     @Query("From Post p order by p.likeCount desc")
     List<Post> getPostsBySortedLikeCount(Pageable pageable);
 
-    @Query("From Post p where p.author.userId = :authorId")
+    @Query("From Post p where p.author.userId = :authorId order by p.publishedDate desc")
     List<Post> getPostsByAuthorId(int authorId, Pageable pageable);
 
     @Query("From Post p where p.title like '%:word%'")
@@ -28,4 +28,10 @@ public interface PostDao extends JpaRepository<Post, Integer> {
 
     @Query("From Post p where p.content like '%:word%'")
     List<Post> getPostsByContent(String word,  Pageable pageable);
+
+    @Query("Select Count(p) From Post p")
+    int getNumberOfPosts();
+
+    @Query("Select Count(p) From Post p where p.author.userId=:authorId")
+    int getAuthorNumberOfPosts(int authorId);
 }

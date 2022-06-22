@@ -51,4 +51,9 @@ public class LikedPostManager implements LikedPostService {
     public void delete(int likedPostId) {
         this.likedPostDao.deleteById(likedPostId);
     }
+
+    @Override
+    public int getNumberOfUsersLikedPosts(int userId) {
+        return this.likedPostDao.getNumberOfUsersLikedPosts(userId);
+    }
 }

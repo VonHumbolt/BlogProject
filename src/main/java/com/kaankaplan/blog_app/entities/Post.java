@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -45,4 +46,8 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "author")
     private Author author;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
+    private List<LikedPost> likedPosts;
 }

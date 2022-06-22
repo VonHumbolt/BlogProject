@@ -2,6 +2,7 @@ package com.kaankaplan.blog_app.api.controllers;
 
 import com.kaankaplan.blog_app.business.abstracts.UserService;
 import com.kaankaplan.blog_app.entities.User;
+import com.kaankaplan.blog_app.entities.dtos.UpdatedUserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,6 +53,14 @@ public class UserController {
         this.userService.delete(userId);
 
         return new ResponseEntity<>("User is deleted", HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('AUTHOR')")
+    @PostMapping("update/{userId}")
+    public ResponseEntity<String> update(@PathVariable int userId, @RequestBody UpdatedUserDto userDto) {
+        this.userService.update(userId, userDto);
+
+        return new ResponseEntity<>("User is updated", HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','AUTHOR')")

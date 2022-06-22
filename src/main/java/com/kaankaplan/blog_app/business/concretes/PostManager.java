@@ -116,4 +116,14 @@ public class PostManager implements PostService {
             throw new RuntimeException("Bu işlem için yetkiniz bulunmamaktadır");
         }
     }
+
+    @Override
+    public int getNumberOfPosts() {
+        return this.postDao.getNumberOfPosts();
+    }
+
+    @Override
+    public int getAuthorNumberOfPosts(int authorId) {
+        return this.postDao.getAuthorNumberOfPosts(authorId);
+    }
 }

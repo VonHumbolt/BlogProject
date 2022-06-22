@@ -5,7 +5,9 @@ import com.kaankaplan.blog_app.business.abstracts.PostService;
 import com.kaankaplan.blog_app.business.abstracts.UserService;
 import com.kaankaplan.blog_app.dataAccess.UserDao;
 import com.kaankaplan.blog_app.entities.LikedPost;
+import com.kaankaplan.blog_app.entities.Post;
 import com.kaankaplan.blog_app.entities.User;
+import com.kaankaplan.blog_app.entities.dtos.UpdatedUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -56,6 +58,19 @@ public class UserManager implements UserService {
     }
 
     @Override
+    public void update(int userId, UpdatedUserDto userDto) {
+        User userFromDb = this.userDao.findById(userId).orElse(null);
+
+        if (userFromDb != null) {
+            userFromDb.setFirstName(userDto.getFirstName());
+            userFromDb.setLastName(userDto.getLastName());
+            userFromDb.setEmail(userDto.getEmail());
+
+            this.userDao.save(userFromDb);
+        }
+    }
+
+    @Override
     @Transactional
     public void likePost(int postId, int userId) {
         User user = this.userDao.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
@@ -64,9 +79,10 @@ public class UserManager implements UserService {
         if (userLikePost != null) {
             throw new RuntimeException("Post is already liked!");
         }
+        Post post = this.postService.getPostById(postId);
         this.postService.updateLikeCount(postId, 1);
 
-        LikedPost likedPost = LikedPost.builder().postId(postId).user(user).build();
+        LikedPost likedPost = LikedPost.builder().post(post).user(user).build();
         likedPostService.add(likedPost);
     }
 
