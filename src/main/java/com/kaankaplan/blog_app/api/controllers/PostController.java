@@ -85,10 +85,10 @@ public class PostController {
 
     @PreAuthorize("hasRole('AUTHOR')")
     @PostMapping("add/{userId}")
-    public ResponseEntity<String> add(@PathVariable int userId, @RequestBody @Valid Post post) {
-        this.postService.add(userId, post);
+    public ResponseEntity<Post> add(@PathVariable int userId, @RequestBody @Valid Post post) {
+        Post addedPost = this.postService.add(userId, post);
 
-        return new ResponseEntity<>("Post created", HttpStatus.CREATED);
+        return new ResponseEntity<>(addedPost, HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAnyRole('AUTHOR','ADMIN')")

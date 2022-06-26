@@ -23,7 +23,7 @@ public interface PostService {
 
     Post getPostById(int postId);
 
-    void add(int userId, Post post);
+    Post add(int userId, Post post);
 
     void updateLikeCount(int postId, int count);
 

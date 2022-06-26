@@ -79,12 +79,13 @@ public class PostManager implements PostService {
 
     @Override
     @Transactional
-    public void add(int userId, Post post) {
+    public Post add(int userId, Post post) {
 
         Author author = this.authorService.getAuthorById(userId);
 
         post.setAuthor(author);
-        this.postDao.save(post);
+        Post addedPost = this.postDao.save(post);
+        return addedPost;
     }
 
     @Override

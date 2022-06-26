@@ -29,7 +29,6 @@ public class Post {
     @Column(name = "title")
     private String title;
 
-    @NotBlank
     @Column(name = "description")
     private String description;
 
