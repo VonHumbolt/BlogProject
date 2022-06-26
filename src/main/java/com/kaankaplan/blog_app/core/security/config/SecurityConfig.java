@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/v1/posts/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/authors/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/users/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/likedPosts/**").permitAll()
                 .anyRequest()
                 .authenticated();
     }

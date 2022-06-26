@@ -56,4 +56,9 @@ public class LikedPostManager implements LikedPostService {
     public int getNumberOfUsersLikedPosts(int userId) {
         return this.likedPostDao.getNumberOfUsersLikedPosts(userId);
     }
+
+    @Override
+    public int getPostLikeCount(int postId) {
+        return this.likedPostDao.getPostLikeCount(postId);
+    }
 }

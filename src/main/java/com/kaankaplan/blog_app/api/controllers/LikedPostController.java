@@ -13,7 +13,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/likedPosts/")
-@CrossOrigin
 public class LikedPostController {
 
     private final LikedPostService likedPostService;
@@ -56,4 +55,9 @@ public class LikedPostController {
     public int getNumberOfUsersLikedPosts(@PathVariable int userId){
         return this.likedPostService.getNumberOfUsersLikedPosts(userId);
     }
+    @GetMapping("getPostLikeCount/{postId}")
+    public int getPostLikeCount(@PathVariable int postId){
+        return this.likedPostService.getPostLikeCount(postId);
+    }
+
 }

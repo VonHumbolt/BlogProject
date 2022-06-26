@@ -20,4 +20,6 @@ public interface LikedPostDao extends JpaRepository<LikedPost, Integer> {
     @Query("Select Count(p) From LikedPost p where p.user.userId = :userId")
     int getNumberOfUsersLikedPosts(int userId);
 
+    @Query("Select Count(p) From LikedPost p where p.post.postId = :postId")
+    int getPostLikeCount(int postId);
 }

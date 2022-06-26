@@ -20,8 +20,6 @@ public class LikedPost {
     @Column(name = "liked_post_id")
     private int likedPostId;
 
-//    @Column(name = "post_id")
-//    private int postId;
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
