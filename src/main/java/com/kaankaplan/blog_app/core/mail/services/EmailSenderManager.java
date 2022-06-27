@@ -22,7 +22,7 @@ public class EmailSenderManager implements MailService {
     public void sendMail(NotificationEmail notificationEmail) {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-            messageHelper.setFrom("testmail@example.com");
+            messageHelper.setFrom("python3.testmail@gmail.com");
             messageHelper.setTo(notificationEmail.getRecipient());
             messageHelper.setSubject(notificationEmail.getSubject());
             messageHelper.setText(mailContentManager.buildTemplateMessage(notificationEmail.getBody()));

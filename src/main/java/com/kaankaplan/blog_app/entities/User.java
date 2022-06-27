@@ -42,7 +42,7 @@ public class User {
     private String password;
 
     @Column(name = "is_active")
-    private boolean isActive = false;
+    private boolean isActive = true;
 
     @ManyToOne
     @JoinColumn(name = "claim")
